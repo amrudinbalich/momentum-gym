@@ -3,6 +3,10 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Profile\ChangePasswordController;
+use App\Http\Controllers\Profile\DeleteAccountController;
+use App\Http\Controllers\Profile\FetchProfileController;
+use App\Http\Controllers\Profile\UpdateProfileController;
 use App\Models\User;
 
 Route::get('/user', function (Request $request) {
@@ -15,6 +19,21 @@ Route::post('/register', [AuthController::class, 'register'])->name('auth.regist
 Route::post('/refresh-token', [AuthController::class, 'refreshToken'])
     ->name('auth.refresh-token')->middleware('auth:sanctum');
 
+
+// user menagnment
+Route::middleware('auth:sanctum')
+    ->prefix('me')
+    ->group(function () {
+
+        Route::get('/', FetchProfileController::class);
+
+        Route::patch('/', UpdateProfileController::class);
+
+        Route::patch('/password', ChangePasswordController::class);
+
+        Route::delete('/', DeleteAccountController::class);
+
+    });
 
 Route::get('/users', function () {
     return response()->json(
