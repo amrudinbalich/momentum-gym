@@ -3,7 +3,16 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Api\BrandController;
+use App\Http\Controllers\Api\CategoryController;
+use App\Http\Controllers\Api\ProductController;
 use App\Models\User;
+
+/*
+|--------------------------------------------------------------------------
+| API Routes
+|--------------------------------------------------------------------------
+*/
 
 Route::get('/user', function (Request $request) {
     return $request->user();
@@ -16,55 +25,39 @@ Route::post('/refresh-token', [AuthController::class, 'refreshToken'])
     ->name('auth.refresh-token')->middleware('auth:sanctum');
 
 
-Route::get('/users', function () {
-    return response()->json(
-        User::all()
-    );
+// Public Browsing Routes (No Auth Required)
+Route::prefix('v1')->group(function () {
+    
+    // Products Endpoints
+    Route::get('/products', [ProductController::class, 'index']);          // List/Filter products
+    Route::get('/products/{product:sku}', [ProductController::class, 'show']); // Fetch single product by SKU
+
+    // Categories Endpoints
+    Route::get('/categories', [CategoryController::class, 'index']);       // List categories
+    Route::get('/categories/{category:slug}', [CategoryController::class, 'show']); // Get products by category slug
+
+    // Brands Endpoints
+    Route::get('/brands', [BrandController::class, 'index']);             // List brands
+    Route::get('/brands/{brand:slug}', [BrandController::class, 'show']); // Get products by brand slug
+
 });
 
+// Protected Administrative Routes (Requires Sanctum/Auth)
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    
+    // Write operations for Products
+    Route::post('/products', [ProductController::class, 'store']);         // Create product
+    Route::put('/products/{product}', [ProductController::class, 'update']); // Update product
+    Route::delete('/products/{product}', [ProductController::class, 'destroy']); // Delete product
 
-Route::get('/info', function () {
-    return response()->json(
-        [
-            'version' => 'v1',
-            'author' => 'Amrudin Balic',
-            'description' => 'CRM Fitness application for managing clients, staff & scheduling.',
-            'author_socials' => [
-                'github' => 'github.com/amrudinbalich',
-                'linkedin' => 'linkedin.com/amrudin-balich',
-            ],
-            'word' => 'Hello from developer :)'
-        ]
-    );
-});
+    // Write operations for Categories
+    Route::post('/categories', [CategoryController::class, 'store']);
+    Route::put('/categories/{category}', [CategoryController::class, 'update']);
+    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
 
-Route::get('/products', function () {
-    return response()->json([
-        [
-            'id' => 44,
-            'name' => 'Aorus 420G MK Motherboard',
-            'description' => 'Asus motherboard, supports DDR5 context. AM6 Socket.',
-            'price' => 244.49,
-            'discount_price' => null,
-            'group_id' => 2, // motherboards
-
-        ]
-    ]);
-});
-
-
-Route::post('/groups/{secretNum}', function ($secretNum) {
-    $secret = 45;
-
-    if($secretNum != $secret) {
-        http_response_code(400);
-
-        return response()->json([
-            'message' => 'Wrong number.'
-        ]);
-    }
-
-    return response()->json([
-        'message' => 'Group created!'
-    ]);
+    // Write operations for Brands
+    Route::post('/brands', [BrandController::class, 'store']);
+    Route::put('/brands/{brand}', [BrandController::class, 'update']);
+    Route::delete('/brands/{brand}', [BrandController::class, 'destroy']);
+    
 });
