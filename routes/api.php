@@ -18,46 +18,80 @@ Route::get('/user', function (Request $request) {
     return $request->user();
 })->middleware('auth:sanctum');
 
-// auth
-Route::post('/login', [AuthController::class, 'login'])->name('auth.login.store');
-Route::post('/register', [AuthController::class, 'register'])->name('auth.register.store');
-Route::post('/refresh-token', [AuthController::class, 'refreshToken'])
-    ->name('auth.refresh-token')->middleware('auth:sanctum');
-
-
-// Public Browsing Routes (No Auth Required)
 Route::prefix('v1')->group(function () {
-    
-    // Products Endpoints
-    Route::get('/products', [ProductController::class, 'index']);          // List/Filter products
-    Route::get('/products/{product:sku}', [ProductController::class, 'show']); // Fetch single product by SKU
 
-    // Categories Endpoints
-    Route::get('/categories', [CategoryController::class, 'index']);       // List categories
-    Route::get('/categories/{category:slug}', [CategoryController::class, 'show']); // Get products by category slug
+    /*
+    |--------------------------------------------------------------------------
+    | Authentication
+    |--------------------------------------------------------------------------
+    */
 
-    // Brands Endpoints
-    Route::get('/brands', [BrandController::class, 'index']);             // List brands
-    Route::get('/brands/{brand:slug}', [BrandController::class, 'show']); // Get products by brand slug
+    Route::post('/login', [AuthController::class, 'login'])
+        ->name('auth.login');
 
-});
+    Route::post('/register', [AuthController::class, 'register'])
+        ->name('auth.register');
 
-// Protected Administrative Routes (Requires Sanctum/Auth)
-Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
-    
-    // Write operations for Products
-    Route::post('/products', [ProductController::class, 'store']);         // Create product
-    Route::put('/products/{product}', [ProductController::class, 'update']); // Update product
-    Route::delete('/products/{product}', [ProductController::class, 'destroy']); // Delete product
+    Route::middleware('auth:sanctum')->group(function () {
 
-    // Write operations for Categories
-    Route::post('/categories', [CategoryController::class, 'store']);
-    Route::put('/categories/{category}', [CategoryController::class, 'update']);
-    Route::delete('/categories/{category}', [CategoryController::class, 'destroy']);
+        Route::post('/refresh-token', [AuthController::class, 'refreshToken'])
+            ->name('auth.refresh-token');
 
-    // Write operations for Brands
-    Route::post('/brands', [BrandController::class, 'store']);
-    Route::put('/brands/{brand}', [BrandController::class, 'update']);
-    Route::delete('/brands/{brand}', [BrandController::class, 'destroy']);
-    
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Products
+    |--------------------------------------------------------------------------
+    */
+
+    Route::apiResource('products', ProductController::class)
+        ->only(['index', 'show'])
+        ->parameters([
+            'products' => 'product:sku',
+        ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Categories
+    |--------------------------------------------------------------------------
+    */
+
+    Route::apiResource('categories', CategoryController::class)
+        ->only(['index', 'show'])
+        ->parameters([
+            'categories' => 'category:slug',
+        ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Brands
+    |--------------------------------------------------------------------------
+    */
+
+    Route::apiResource('brands', BrandController::class)
+        ->only(['index', 'show'])
+        ->parameters([
+            'brands' => 'brand:slug',
+        ]);
+
+    /*
+    |--------------------------------------------------------------------------
+    | Administration
+    |--------------------------------------------------------------------------
+    */
+
+    Route::middleware('auth:sanctum')->group(function () {
+
+        Route::apiResource('products', ProductController::class)
+            ->only(['store', 'update', 'destroy']);
+
+        Route::apiResource('categories', CategoryController::class)
+            ->only(['store', 'update', 'destroy']);
+
+        Route::apiResource('brands', BrandController::class)
+            ->only(['store', 'update', 'destroy']);
+
+    });
+
 });

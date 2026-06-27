@@ -45,7 +45,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/login
+    uri: api/v1/login
     metadata:
       custom: []
       groupName: Endpoints
@@ -100,7 +100,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/register
+    uri: api/v1/register
     metadata:
       custom: []
       groupName: Endpoints
@@ -167,7 +167,7 @@ endpoints:
     custom: []
     httpMethods:
       - POST
-    uri: api/refresh-token
+    uri: api/v1/refresh-token
     metadata:
       custom: []
       groupName: Endpoints
@@ -222,11 +222,14 @@ endpoints:
     responses:
       -
         custom: []
-        status: 200
-        content: ''
+        status: 500
+        content: |-
+          {
+              "message": "Server Error"
+          }
         headers:
-          content-type: 'text/html; charset=utf-8'
           cache-control: 'no-cache, private'
+          content-type: application/json
           access-control-allow-origin: '*'
         description: null
     responseFields: []
@@ -238,7 +241,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/products/{product_sku}'
+    uri: 'api/v1/products/{sku}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -253,19 +256,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      product_sku:
+      sku:
         custom: []
-        name: product_sku
+        name: sku
         description: ''
         required: true
-        example: architecto
-        type: string
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      product_sku: architecto
+      sku: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -330,7 +333,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/categories/{category_slug}'
+    uri: 'api/v1/categories/{slug}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -345,9 +348,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      category_slug:
+      slug:
         custom: []
-        name: category_slug
+        name: slug
         description: 'The slug of the category.'
         required: true
         example: 1
@@ -357,7 +360,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      category_slug: 1
+      slug: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -425,7 +428,7 @@ endpoints:
     custom: []
     httpMethods:
       - GET
-    uri: 'api/v1/brands/{brand_slug}'
+    uri: 'api/v1/brands/{slug}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -440,9 +443,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      brand_slug:
+      slug:
         custom: []
-        name: brand_slug
+        name: slug
         description: 'The slug of the brand.'
         required: true
         example: 1
@@ -452,7 +455,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      brand_slug: 1
+      slug: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -511,7 +514,8 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/products/{product}'
+      - PATCH
+    uri: 'api/v1/products/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -526,19 +530,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      product:
+      id:
         custom: []
-        name: product
-        description: 'The product.'
+        name: id
+        description: 'The ID of the product.'
         required: true
-        example: architecto
-        type: string
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      product: architecto
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -554,7 +558,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/products/{product}'
+    uri: 'api/v1/products/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -569,19 +573,19 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      product:
+      id:
         custom: []
-        name: product
-        description: 'The product.'
+        name: id
+        description: 'The ID of the product.'
         required: true
-        example: architecto
-        type: string
+        example: 1
+        type: integer
         enumValues: []
         exampleWasSpecified: false
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      product: architecto
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -628,7 +632,8 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/categories/{category_id}'
+      - PATCH
+    uri: 'api/v1/categories/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -643,9 +648,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      category_id:
+      id:
         custom: []
-        name: category_id
+        name: id
         description: 'The ID of the category.'
         required: true
         example: 1
@@ -655,7 +660,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      category_id: 1
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -671,7 +676,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/categories/{category_id}'
+    uri: 'api/v1/categories/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -686,9 +691,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      category_id:
+      id:
         custom: []
-        name: category_id
+        name: id
         description: 'The ID of the category.'
         required: true
         example: 1
@@ -698,7 +703,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      category_id: 1
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -745,7 +750,8 @@ endpoints:
     custom: []
     httpMethods:
       - PUT
-    uri: 'api/v1/brands/{brand_id}'
+      - PATCH
+    uri: 'api/v1/brands/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -760,9 +766,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      brand_id:
+      id:
         custom: []
-        name: brand_id
+        name: id
         description: 'The ID of the brand.'
         required: true
         example: 1
@@ -772,7 +778,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      brand_id: 1
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []
@@ -788,7 +794,7 @@ endpoints:
     custom: []
     httpMethods:
       - DELETE
-    uri: 'api/v1/brands/{brand_id}'
+    uri: 'api/v1/brands/{id}'
     metadata:
       custom: []
       groupName: Endpoints
@@ -803,9 +809,9 @@ endpoints:
       Content-Type: application/json
       Accept: application/json
     urlParameters:
-      brand_id:
+      id:
         custom: []
-        name: brand_id
+        name: id
         description: 'The ID of the brand.'
         required: true
         example: 1
@@ -815,7 +821,7 @@ endpoints:
         nullable: false
         deprecated: false
     cleanUrlParameters:
-      brand_id: 1
+      id: 1
     queryParameters: []
     cleanQueryParameters: []
     bodyParameters: []

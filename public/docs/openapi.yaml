@@ -31,10 +31,10 @@ paths:
       tags:
         - Endpoints
       security: []
-  /api/login:
+  /api/v1/login:
     post:
       summary: ''
-      operationId: postApiLogin
+      operationId: postApiV1Login
       description: ''
       parameters: []
       responses: {}
@@ -59,10 +59,10 @@ paths:
                 - email
                 - password
       security: []
-  /api/register:
+  /api/v1/register:
     post:
       summary: ''
-      operationId: postApiRegister
+      operationId: postApiV1Register
       description: ''
       parameters: []
       responses: {}
@@ -92,10 +92,10 @@ paths:
                 - email
                 - password
       security: []
-  /api/refresh-token:
+  /api/v1/refresh-token:
     post:
       summary: ''
-      operationId: postApiRefreshToken
+      operationId: postApiV1RefreshToken
       description: ''
       parameters: []
       responses: {}
@@ -109,13 +109,18 @@ paths:
       description: ''
       parameters: []
       responses:
-        200:
+        500:
           description: ''
           content:
-            text/plain:
+            application/json:
               schema:
-                type: string
-                example: ''
+                type: object
+                example:
+                  message: 'Server Error'
+                properties:
+                  message:
+                    type: string
+                    example: 'Server Error'
       tags:
         - Endpoints
       security: []
@@ -128,7 +133,7 @@ paths:
       tags:
         - Endpoints
       security: []
-  '/api/v1/products/{product_sku}':
+  '/api/v1/products/{sku}':
     get:
       summary: 'Display the specified resource.'
       operationId: displayTheSpecifiedResource
@@ -148,12 +153,12 @@ paths:
     parameters:
       -
         in: path
-        name: product_sku
+        name: sku
         description: ''
-        example: architecto
+        example: 1
         required: true
         schema:
-          type: string
+          type: integer
   /api/v1/categories:
     get:
       summary: 'Display a listing of the resource.'
@@ -180,7 +185,7 @@ paths:
       tags:
         - Endpoints
       security: []
-  '/api/v1/categories/{category_slug}':
+  '/api/v1/categories/{slug}':
     get:
       summary: 'Display the specified resource.'
       operationId: displayTheSpecifiedResource
@@ -205,7 +210,7 @@ paths:
     parameters:
       -
         in: path
-        name: category_slug
+        name: slug
         description: 'The slug of the category.'
         example: 1
         required: true
@@ -237,7 +242,7 @@ paths:
       tags:
         - Endpoints
       security: []
-  '/api/v1/brands/{brand_slug}':
+  '/api/v1/brands/{slug}':
     get:
       summary: 'Display the specified resource.'
       operationId: displayTheSpecifiedResource
@@ -262,13 +267,13 @@ paths:
     parameters:
       -
         in: path
-        name: brand_slug
+        name: slug
         description: 'The slug of the brand.'
         example: 1
         required: true
         schema:
           type: integer
-  '/api/v1/products/{product}':
+  '/api/v1/products/{id}':
     put:
       summary: 'Update the specified resource in storage.'
       operationId: updateTheSpecifiedResourceInStorage
@@ -290,13 +295,13 @@ paths:
     parameters:
       -
         in: path
-        name: product
-        description: 'The product.'
-        example: architecto
+        name: id
+        description: 'The ID of the product.'
+        example: 1
         required: true
         schema:
-          type: string
-  '/api/v1/categories/{category_id}':
+          type: integer
+  '/api/v1/categories/{id}':
     put:
       summary: 'Update the specified resource in storage.'
       operationId: updateTheSpecifiedResourceInStorage
@@ -318,13 +323,13 @@ paths:
     parameters:
       -
         in: path
-        name: category_id
+        name: id
         description: 'The ID of the category.'
         example: 1
         required: true
         schema:
           type: integer
-  '/api/v1/brands/{brand_id}':
+  '/api/v1/brands/{id}':
     put:
       summary: 'Update the specified resource in storage.'
       operationId: updateTheSpecifiedResourceInStorage
@@ -346,7 +351,7 @@ paths:
     parameters:
       -
         in: path
-        name: brand_id
+        name: id
         description: 'The ID of the brand.'
         example: 1
         required: true

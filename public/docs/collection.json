@@ -10,7 +10,7 @@
     ],
     "info": {
         "name": "Laravel API Documentation",
-        "_postman_id": "feb99db7-4806-4cf3-8c74-f9150bc2ea5b",
+        "_postman_id": "ddebc1e6-9050-4da4-904f-1611c8b32a43",
         "description": "",
         "schema": "https:\/\/schema.getpostman.com\/json\/collection\/v2.1.0\/collection.json"
     },
@@ -68,13 +68,13 @@
                     ]
                 },
                 {
-                    "name": "POST api\/login",
+                    "name": "POST api\/v1\/login",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/login",
+                            "path": "api\/v1\/login",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/login"
+                            "raw": "{{baseUrl}}\/api\/v1\/login"
                         },
                         "method": "POST",
                         "header": [
@@ -99,13 +99,13 @@
                     "response": []
                 },
                 {
-                    "name": "POST api\/register",
+                    "name": "POST api\/v1\/register",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/register",
+                            "path": "api\/v1\/register",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/register"
+                            "raw": "{{baseUrl}}\/api\/v1\/register"
                         },
                         "method": "POST",
                         "header": [
@@ -130,13 +130,13 @@
                     "response": []
                 },
                 {
-                    "name": "POST api\/refresh-token",
+                    "name": "POST api\/v1\/refresh-token",
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/refresh-token",
+                            "path": "api\/v1\/refresh-token",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/refresh-token"
+                            "raw": "{{baseUrl}}\/api\/v1\/refresh-token"
                         },
                         "method": "POST",
                         "header": [
@@ -187,20 +187,20 @@
                         {
                             "header": [
                                 {
-                                    "key": "content-type",
-                                    "value": "text\/html; charset=utf-8"
-                                },
-                                {
                                     "key": "cache-control",
                                     "value": "no-cache, private"
+                                },
+                                {
+                                    "key": "content-type",
+                                    "value": "application\/json"
                                 },
                                 {
                                     "key": "access-control-allow-origin",
                                     "value": "*"
                                 }
                             ],
-                            "code": 200,
-                            "body": "",
+                            "code": 500,
+                            "body": "{\n    \"message\": \"Server Error\"\n}",
                             "name": ""
                         }
                     ]
@@ -210,14 +210,14 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/products\/:product_sku",
+                            "path": "api\/v1\/products\/:sku",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/products\/:product_sku",
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:sku",
                             "variable": [
                                 {
-                                    "id": "product_sku",
-                                    "key": "product_sku",
-                                    "value": "architecto",
+                                    "id": "sku",
+                                    "key": "sku",
+                                    "value": 1,
                                     "description": ""
                                 }
                             ]
@@ -314,13 +314,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/categories\/:category_slug",
+                            "path": "api\/v1\/categories\/:slug",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:category_slug",
+                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:slug",
                             "variable": [
                                 {
-                                    "id": "category_slug",
-                                    "key": "category_slug",
+                                    "id": "slug",
+                                    "key": "slug",
                                     "value": 1,
                                     "description": "The slug of the category."
                                 }
@@ -418,13 +418,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/brands\/:brand_slug",
+                            "path": "api\/v1\/brands\/:slug",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:brand_slug",
+                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:slug",
                             "variable": [
                                 {
-                                    "id": "brand_slug",
-                                    "key": "brand_slug",
+                                    "id": "slug",
+                                    "key": "slug",
                                     "value": 1,
                                     "description": "The slug of the brand."
                                 }
@@ -502,15 +502,15 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/products\/:product",
+                            "path": "api\/v1\/products\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/products\/:product",
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
                             "variable": [
                                 {
-                                    "id": "product",
-                                    "key": "product",
-                                    "value": "architecto",
-                                    "description": "The product."
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the product."
                                 }
                             ]
                         },
@@ -538,15 +538,15 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/products\/:product",
+                            "path": "api\/v1\/products\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/products\/:product",
+                            "raw": "{{baseUrl}}\/api\/v1\/products\/:id",
                             "variable": [
                                 {
-                                    "id": "product",
-                                    "key": "product",
-                                    "value": "architecto",
-                                    "description": "The product."
+                                    "id": "id",
+                                    "key": "id",
+                                    "value": 1,
+                                    "description": "The ID of the product."
                                 }
                             ]
                         },
@@ -602,13 +602,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/categories\/:category_id",
+                            "path": "api\/v1\/categories\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:category_id",
+                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:id",
                             "variable": [
                                 {
-                                    "id": "category_id",
-                                    "key": "category_id",
+                                    "id": "id",
+                                    "key": "id",
                                     "value": 1,
                                     "description": "The ID of the category."
                                 }
@@ -638,13 +638,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/categories\/:category_id",
+                            "path": "api\/v1\/categories\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:category_id",
+                            "raw": "{{baseUrl}}\/api\/v1\/categories\/:id",
                             "variable": [
                                 {
-                                    "id": "category_id",
-                                    "key": "category_id",
+                                    "id": "id",
+                                    "key": "id",
                                     "value": 1,
                                     "description": "The ID of the category."
                                 }
@@ -702,13 +702,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/brands\/:brand_id",
+                            "path": "api\/v1\/brands\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:id",
                             "variable": [
                                 {
-                                    "id": "brand_id",
-                                    "key": "brand_id",
+                                    "id": "id",
+                                    "key": "id",
                                     "value": 1,
                                     "description": "The ID of the brand."
                                 }
@@ -738,13 +738,13 @@
                     "request": {
                         "url": {
                             "host": "{{baseUrl}}",
-                            "path": "api\/v1\/brands\/:brand_id",
+                            "path": "api\/v1\/brands\/:id",
                             "query": [],
-                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:brand_id",
+                            "raw": "{{baseUrl}}\/api\/v1\/brands\/:id",
                             "variable": [
                                 {
-                                    "id": "brand_id",
-                                    "key": "brand_id",
+                                    "id": "id",
+                                    "key": "id",
                                     "value": 1,
                                     "description": "The ID of the brand."
                                 }
