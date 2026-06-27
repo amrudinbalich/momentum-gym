@@ -11,7 +11,7 @@ use App\Models\Product;
 class ProductController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Display a listing of t he resource.
      */
     public function index()
     {
