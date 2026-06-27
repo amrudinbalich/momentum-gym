@@ -29,14 +29,7 @@ class ProductController extends Controller
      */
     public function store(StoreProductRequest $request)
     {
-        $validated = $request->validate([
-            'name'        => ['required', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'price'       => ['required', 'numeric', 'min:0'],
-            'is_active'   => ['boolean'],
-        ]);
-
-        $product = Product::create($validated);
+        $product = Product::create($request->validated());
 
         return response()->json([
             'message' => 'Product created successfully.',
@@ -47,41 +40,29 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Product $product)
     {
-        $product = Product::findOrFail($id);
         return new ProductResource($product);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateProductRequest $request, string $id)
+    public function update(UpdateProductRequest $request, Product $product)
     {
-        $product = Product::findOrFail($id);
-
-        $validated = $request->validate([
-            'name'        => ['sometimes', 'string', 'max:255'],
-            'description' => ['nullable', 'string'],
-            'price'       => ['sometimes', 'numeric', 'min:0'],
-            'is_active'   => ['sometimes', 'boolean'],
-        ]);
-
-        $product->update($validated);
+        $product->update($request->validated());
 
         return response()->json([
             'message' => 'Product updated successfully.',
             'data' => new ProductResource($product),
         ]);
-
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Product $product)
     {
-        $product = Product::findOrFail($id);
         $product->delete();
 
         return response()->json([

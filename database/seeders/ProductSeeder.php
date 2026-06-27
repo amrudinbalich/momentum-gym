@@ -29,7 +29,7 @@ class ProductSeeder extends Seeder
         ]));
 
         Product::factory()
-            ->count(50)
+            ->count(400)
             ->create(function () use ($categories, $brands) {
                 return [
                     'category_id' => $categories->random()->id,
