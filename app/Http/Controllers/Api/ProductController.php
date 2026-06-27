@@ -7,19 +7,17 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\ProductResource;
 use App\Models\Product;
+use Illuminate\Http\Request;
 
 class ProductController extends Controller
 {
     /**
      * Display a listing of t he resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // $perPage = 15;
-
-        $products = Product::active()
-            ->latest()->get();
-            // ->paginate($perPage);
+        $perPage = $request->input('per_page', 15);
+        $products = Product::active()->latest()->paginate($perPage);
 
         return ProductResource::collection($products);
     }
