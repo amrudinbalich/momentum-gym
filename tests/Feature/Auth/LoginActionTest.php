@@ -17,7 +17,7 @@ class LoginActionTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        $response = $this->postJson(route('auth.login.store'), [
+        $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'password123',
         ]);
@@ -35,7 +35,7 @@ class LoginActionTest extends TestCase
             'password' => bcrypt('password123'),
         ]);
 
-        $response = $this->postJson(route('auth.login.store'), [
+        $response = $this->postJson(route('auth.login'), [
             'email' => $user->email,
             'password' => 'wrong-password',
         ]);

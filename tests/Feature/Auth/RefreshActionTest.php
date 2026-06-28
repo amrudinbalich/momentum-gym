@@ -12,7 +12,7 @@ class RefreshActionTest extends TestCase
 
     public function test_user_can_register(): void
     {
-        $response = $this->postJson(route('auth.register.store'), [
+        $response = $this->postJson(route('auth.register'), [
             'name' => 'John Doe',
             'email' => 'john@example.com',
             'password' => 'password123',
