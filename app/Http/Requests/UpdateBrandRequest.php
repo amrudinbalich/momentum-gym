@@ -4,6 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class UpdateBrandRequest extends FormRequest
 {
@@ -12,7 +13,7 @@ class UpdateBrandRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return $this->user()?->isAdmin();
     }
 
     /**
@@ -23,7 +24,15 @@ class UpdateBrandRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'name' => ['sometimes', 'string', 'max:255'],
+            'slug' => [
+                'sometimes',
+                'string',
+                'max:255',
+                Rule::unique('brands', 'slug')->ignore($this->brand),
+            ],
+            'description' => ['nullable', 'string'],
+            'is_active' => ['sometimes', 'boolean'],
         ];
     }
 }

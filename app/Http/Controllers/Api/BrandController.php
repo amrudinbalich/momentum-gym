@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\StoreBrandRequest;
 use App\Http\Requests\UpdateBrandRequest;
-use App\Http\Controllers\Controller;
+use App\Http\Resources\BrandResource;
+use Illuminate\Http\Request;
 use App\Models\Brand;
 
 class BrandController extends Controller
@@ -12,17 +14,12 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        //
-    }
+        $perPage = min($request->integer('per_page', 15), 100);
+        $brands = Brand::latest()->paginate($perPage);
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
+        return BrandResource::collection($brands);
     }
 
     /**
@@ -30,7 +27,12 @@ class BrandController extends Controller
      */
     public function store(StoreBrandRequest $request)
     {
-        //
+        $brand = Brand::create($request->validated());
+
+        return response()->json([
+            'message' => 'Brand created successfully.',
+            'data' => new BrandResource($brand),
+        ], 201);
     }
 
     /**
@@ -38,15 +40,7 @@ class BrandController extends Controller
      */
     public function show(Brand $brand)
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(Brand $brand)
-    {
-        //
+        return new BrandResource($brand);
     }
 
     /**
@@ -54,7 +48,12 @@ class BrandController extends Controller
      */
     public function update(UpdateBrandRequest $request, Brand $brand)
     {
-        //
+        $brand->update($request->validated());
+
+        return response()->json([
+            'message' => 'Brand updated successfully.',
+            'data' => new BrandResource($brand),
+        ]);
     }
 
     /**
@@ -62,6 +61,10 @@ class BrandController extends Controller
      */
     public function destroy(Brand $brand)
     {
-        //
+        $brand->delete();
+
+        return response()->json([
+            'message' => 'Brand deleted successfully.',
+        ]);
     }
 }
